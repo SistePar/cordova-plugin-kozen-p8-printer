@@ -1,9 +1,9 @@
 {
-  "name": "cordova-plugin-btprinter",
-  "version": "0.0.1-dev",
+  "name": "cordova-plugin-kozen-p8-printer",
+  "version": "1.0.0",
   "description": "A cordova plugin for bluetooth printer for android platform.",
   "cordova": {
-    "id": "cordova-plugin-btprinter",
+    "id": "cordova-plugin-kozen-p8-printer",
     "platforms": [
       "android"
     ]
@@ -14,7 +14,6 @@
   },
   "keywords": [
     "cordova",
-    "bluetooth",
     "printer",
     "pos",
     "text",
@@ -31,8 +30,8 @@
       "version": ">=3.0.0"
     }
   ],
-  "author": "Cesar E. Balzer",
-  "license": "Apache 2.0",
+  "author": "sistepar.com",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/CesarBalzer/Cordova-Plugin-BTPrinter/issues"
   },

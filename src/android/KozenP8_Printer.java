@@ -1,4 +1,4 @@
-package com.sistepar.cordova.kozenp8.printer;
+package com.sistepar.cordova.kozenp8;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;

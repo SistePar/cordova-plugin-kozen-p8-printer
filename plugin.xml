@@ -26,7 +26,7 @@
    <platform name="android">
       <config-file target="res/xml/config.xml" parent="/*">
          <feature name="KozenP8_Printer">
-            <param name="android-package" value="com.sistepar.cordova.kozenp8.printer"/>
+            <param name="android-package" value="com.sistepar.cordova.kozenp8"/>
          </feature>
       </config-file>
 
@@ -35,7 +35,7 @@
       <config-file target="AndroidManifest.xml" parent="/*">
       </config-file>
 
-      <source-file src="src/android/KozenP8_Printer.java" target-dir="src/com/sistepar/cordova/kozenp8/printer/" />
+      <source-file src="src/android/KozenP8_Printer.java" target-dir="src/com/sistepar/cordova/kozenp8/" />
 
       <lib-file src="src/android/libs/classes-2.1.17.jar" />
 
