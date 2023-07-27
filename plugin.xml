@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-plugin-kozen-p8-printer"
+        version="1.0.0">
+
+   <name>KozenP8-Printer</name>
+   <description>Plugin de cordova para usar el SDK e imprimir con la impresora integrada.</description>
+
+   <repo>https://github.com/SistePar/cordova-plugin-kozen-p8-printer</repo>
+   <license>MIT</license>
+   <keywords>cordova, kozen, p8, printer, pos</keywords>
+
+   <author>sistepar.com</author>
+
+   <!-- cordova -->
+   <engines>
+      <engine name="cordova" version=">=3.0.0" />
+   </engines>
+
+   <js-module src="www/KozenP8_Printer.js" name="KozenP8_Printer">
+      <clobbers target="cordova.plugins.KozenP8_Printer" />
+   </js-module>
+
+   <!-- android -->
+   <platform name="android">
+      <config-file target="res/xml/config.xml" parent="/*">
+         <feature name="KozenP8_Printer">
+            <param name="android-package" value="com.sistepar.cordova.KozenP8.Printer"/>
+         </feature>
+      </config-file>
+
+      <framework src="androidx.appcompat:appcompat:1.6.1" />     
+
+      <config-file target="AndroidManifest.xml" parent="/*">
+      </config-file>
+
+      <source-file src="src/android/KozenP8_Printer.java" target-dir="src/com/sistepar/cordova/kozenp8/printer/" />
+
+      <lib-file src="src/android/libs/classes-2.1.17.jar" />
+
+   </platform>
+</plugin>
