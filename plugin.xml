@@ -35,7 +35,7 @@
          </feature>
       </config-file>
 
-      <source-file src="src/android/KozenP8Printer.java" target-dir="src/com/sistepar/cordova/kozenp8/" />
+      <source-file src="src/android/KozenP8Printer.java" target-dir="src/com/sistepar/cordova/kozenp8" />
 
       <framework src="androidx.room:room-runtime:2.4.0-alpha03" />
       <lib-file src="src/android/libs/classes-2.1.17.jar" />

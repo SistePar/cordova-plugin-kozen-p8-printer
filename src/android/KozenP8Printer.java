@@ -1,6 +1,7 @@
 package com.sistepar.cordova.kozenp8;
 
 import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,16 +25,19 @@ public class KozenP8Printer extends CordovaPlugin {
     private static final String TAG = "KozenP8Printer";
     private Context context;
 
-    public KozenP8Printer() {   
+    public KozenP8Printer() {
+        final CordovaInterface cordova = this.cordova;
+
+        this.context = cordova.getActivity().getBaseContext();
     }
     
 
-    @Override
+    /*@Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super(cordova, webView);
 
         this.context = cordova.getActivity().getBaseContext(); //webView.getContext()
-    }
+    }*/
 
 
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
@@ -41,7 +45,7 @@ public class KozenP8Printer extends CordovaPlugin {
         if (action.equals("status")) {
 
             final POIPrinterManager printerManager = new POIPrinterManager(this.context);
-            
+
             printerManager.open();
 
             PrintLine p1 = new TextPrintLine("HOLIIII", PrintLine.CENTER);
