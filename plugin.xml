@@ -4,7 +4,7 @@
         id="cordova-plugin-kozen-p8-printer"
         version="1.0.0">
 
-   <name>KozenP8-Printer</name>
+   <name>KozenP8_Printer</name>
    <description>Plugin de cordova para usar el SDK e imprimir con la impresora integrada.</description>
 
    <repo>https://github.com/SistePar/cordova-plugin-kozen-p8-printer</repo>
@@ -19,7 +19,7 @@
    </engines>
 
    <js-module src="www/KozenP8_Printer.js" name="KozenP8_Printer">
-      <clobbers target="cordova.plugins.KozenP8_Printer" />
+      <clobbers target="KozenP8_Printer" />
    </js-module>
 
    <!-- android -->

@@ -1,10 +1,15 @@
 var exec = require('cordova/exec');
 
-var KozenP8_Printer = {
+var vFunctions = {
     state: function (fnSuccess, fnError) {
         exec(fnSuccess, fnError, "KozenP8_Printer", "state", []);
-    },
-    list: function (fnSuccess, fnError) {
+    }
+};
+
+module.exports = vFunctions;
+
+
+/*list: function (fnSuccess, fnError) {
         exec(fnSuccess, fnError, "KozenP8_Printer", "list", []);
     },
     connect: function (fnSuccess, fnError, name) {
@@ -42,7 +47,4 @@ var KozenP8_Printer = {
     },
     printBarcode: function (fnSuccess, fnError, system, data, align, position, font, height) {
         exec(fnSuccess, fnError, "KozenP8_Printer", "printBarcode", [system, data, align, position, font, height]);
-    }
-};
-
-module.exports = KozenP8_Printer;
+    }*/
