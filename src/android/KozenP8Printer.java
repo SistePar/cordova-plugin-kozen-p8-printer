@@ -32,40 +32,38 @@ public class KozenP8Printer extends CordovaPlugin {
     /*@Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super(cordova, webView);
-
         this.context = cordova.getActivity().getBaseContext(); //webView.getContext()
     }*/
 
 
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
+        final CordovaInterface cordova = this.cordova;
+        this.context = cordova.getActivity().getBaseContext();
 
         if (action.equals("status")) {
-
-            final CordovaInterface cordova = this.cordova;
-            this.context = cordova.getActivity().getBaseContext();
-
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
-                    final POIPrinterManager printerManager = new POIPrinterManager(this.context);
+                    final POIPrinterManager printerManager = new POIPrinterManager(cordova.getActivity().getBaseContext());
 
                     printerManager.open();
 
                     PrintLine p1 = new TextPrintLine("HOLIIII", PrintLine.CENTER);
                     printerManager.addPrintLine(p1);
+                    printerManager.setLineSpace(5);
 
                     POIPrinterManager.IPrinterListener listener = new POIPrinterManager.IPrinterListener() {
                         @Override
-                        public void onStart() {}
-
+                        public void onStart() {
+                            Log.d(TAG, "printer inicia")
+                        }
                         @Override
                         public void onFinish() {
-                            //printerManager.cleanCache();
+                            printerManager.cleanCache();
                             printerManager.close();
                         }
-
                         @Override
-                        public void onError(int code, String msg) {
-                            Log.e("POIPrinterManager", "code: " + code + "msg: " + msg);
+                        public void onError(int cod, String msj) {
+                            Log.e(TAG, "cod: " + cod + "msj: " + msj);
                             printerManager.close();
                         }
                     };
