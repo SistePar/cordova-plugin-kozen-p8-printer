@@ -26,11 +26,8 @@ public class KozenP8Printer extends CordovaPlugin {
     private Context context;
 
     public KozenP8Printer() {
-        final CordovaInterface cordova = this.cordova;
-
-        this.context = cordova.getActivity().getBaseContext();
     }
-    
+
 
     /*@Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -44,33 +41,42 @@ public class KozenP8Printer extends CordovaPlugin {
 
         if (action.equals("status")) {
 
-            final POIPrinterManager printerManager = new POIPrinterManager(this.context);
+            final CordovaInterface cordova = this.cordova;
+            this.context = cordova.getActivity().getBaseContext();
 
-            printerManager.open();
+            cordova.getThreadPool().execute(new Runnable() {
+                public void run() {
+                    final POIPrinterManager printerManager = new POIPrinterManager(this.context);
 
-            PrintLine p1 = new TextPrintLine("HOLIIII", PrintLine.CENTER);
-            printerManager.addPrintLine(p1);
+                    printerManager.open();
 
-            POIPrinterManager.IPrinterListener listener = new POIPrinterManager.IPrinterListener() {
-                @Override
-                public void onStart() {}
+                    PrintLine p1 = new TextPrintLine("HOLIIII", PrintLine.CENTER);
+                    printerManager.addPrintLine(p1);
 
-                @Override
-                public void onFinish() {
-                    //printerManager.cleanCache();
-                    printerManager.close();
+                    POIPrinterManager.IPrinterListener listener = new POIPrinterManager.IPrinterListener() {
+                        @Override
+                        public void onStart() {}
+
+                        @Override
+                        public void onFinish() {
+                            //printerManager.cleanCache();
+                            printerManager.close();
+                        }
+
+                        @Override
+                        public void onError(int code, String msg) {
+                            Log.e("POIPrinterManager", "code: " + code + "msg: " + msg);
+                            printerManager.close();
+                        }
+                    };
+
+                    printerManager.beginPrint(listener);
+
+                    callbackContext.success("ok");
                 }
+            });
 
-                @Override
-                public void onError(int code, String msg) {
-                    Log.e("POIPrinterManager", "code: " + code + "msg: " + msg);
-                    printerManager.close();
-                }
-            };
 
-            printerManager.beginPrint(listener);
-
-            callbackContext.success("ok");
             return true;
 
         }
