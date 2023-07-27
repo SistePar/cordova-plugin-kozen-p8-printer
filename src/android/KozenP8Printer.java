@@ -1,3 +1,8 @@
+/**
+ * Cordova Plugin to use SDK of P8 POS Printer
+ * @author: sistepar.com
+ */
+
 package com.sistepar.cordova.kozenp8;
 
 import org.apache.cordova.CallbackContext;
@@ -71,11 +76,10 @@ public class KozenP8Printer extends CordovaPlugin {
                     printerManager.beginPrint(listener);
 
                     callbackContext.success("ok");
+
+                    return true;
                 }
             });
-
-
-            return true;
 
         }
 
