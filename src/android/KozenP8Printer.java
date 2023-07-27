@@ -22,15 +22,26 @@ import java.util.List;
 public class KozenP8Printer extends CordovaPlugin {
 
     private static final String TAG = "KozenP8Printer";
+    private Context context;
+
+    public KozenP8Printer() {   
+    }
     
+
     @Override
+    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+        super(cordova, webView);
+
+        this.context = cordova.getActivity().getBaseContext(); //webView.getContext()
+    }
+
+
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
 
-        Context context = this.webview.getContext();
-        final POIPrinterManager printerManager = new POIPrinterManager(context);
+        if (action.equals("status")) {
 
-        if ("state".equals(action)) {
-
+            final POIPrinterManager printerManager = new POIPrinterManager(this.context);
+            
             printerManager.open();
 
             PrintLine p1 = new TextPrintLine("HOLIIII", PrintLine.CENTER);
