@@ -30,6 +30,30 @@ public class KozenP8_Printer extends CordovaPlugin {
 
         if (action.equals("state")) {
 
+            printerManager.open();
+
+            PrintLine p1 = new TextPrintLine("HOLIIII", PrintLine.CENTER);
+            printerManager.addPrintLine(p1);
+
+            POIPrinterManager.IPrinterListener listener = new POIPrinterManager.IPrinterListener() {
+                @Override
+                public void onStart() {}
+
+                @Override
+                public void onFinish() {
+                    //printerManager.cleanCache();
+                    printerManager.close();
+                }
+
+                @Override
+                public void onError(int code, String msg) {
+                    Log.e("POIPrinterManager", "code: " + code + "msg: " + msg);
+                    printerManager.close();
+                }
+            };
+
+            printerManager.beginPrint(listener);
+
             callbackContext.success("ok");
             return true;
 
