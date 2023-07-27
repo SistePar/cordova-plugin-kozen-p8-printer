@@ -19,9 +19,9 @@ import com.pos.sdk.printer.models.TextPrintLine;
 import java.util.ArrayList;
 import java.util.List;
 
-public class KozenP8_Printer extends CordovaPlugin {
+public class KozenP8Printer extends CordovaPlugin {
 
-    private static final String TAG = "KozenP8_Printer";
+    private static final String TAG = "KozenP8Printer";
     
     @Override
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
@@ -29,7 +29,7 @@ public class KozenP8_Printer extends CordovaPlugin {
         Context context = this.cordova.getActivity().getApplicationContext();
         final POIPrinterManager printerManager = new POIPrinterManager(context);
 
-        if (action.equals("state")) {
+        if ("state".equals(action)) {
 
             printerManager.open();
 
@@ -58,9 +58,9 @@ public class KozenP8_Printer extends CordovaPlugin {
             callbackContext.success("ok");
             return true;
 
-        } else {
-            return false;
         }
+
+        return false;
 
     }
 }

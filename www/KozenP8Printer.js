@@ -1,8 +1,8 @@
 var exec = require('cordova/exec');
 
 var vFunctions = {
-    state: function (fnSuccess, fnError) {
-        exec(fnSuccess, fnError, "KozenP8_Printer", "state", []);
+    status: function (fnSuccess, fnError) {
+        exec(fnSuccess, fnError, "KozenP8Printer", "status", []);
     }
 };
 

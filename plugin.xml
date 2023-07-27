@@ -18,26 +18,30 @@
       <engine name="cordova" version=">=3.0.0" />
    </engines>
 
-   <js-module src="www/KozenP8_Printer.js" name="KozenP8_Printer">
-      <clobbers target="KozenP8_Printer" />
+   <js-module src="www/KozenP8Printer.js" name="KozenP8Printer">
+      <clobbers target="window.KozenP8Printer" />
    </js-module>
 
    <!-- android -->
    <platform name="android">
+      <info>
+         Made by sistepar.com
+      </info>
+
       <config-file target="res/xml/config.xml" parent="/*">
-         <feature name="KozenP8_Printer">
-            <param name="android-package" value="com.sistepar.cordova.kozenp8"/>
+         <feature name="KozenP8Printer">
+            <param name="android-package" value="com.sistepar.cordova.kozenp8.KozenP8Printer"/>
+            <param name="onload" value="true" />
          </feature>
       </config-file>
 
+      <source-file src="src/android/KozenP8Printer.java" target-dir="src/com/sistepar/cordova/kozenp8/" />
+
       <framework src="androidx.room:room-runtime:2.4.0-alpha03" />
+      <lib-file src="src/android/libs/classes-2.1.17.jar" />
 
       <config-file target="AndroidManifest.xml" parent="/*">
       </config-file>
-
-      <source-file src="src/android/KozenP8_Printer.java" target-dir="src/com/sistepar/cordova/kozenp8/" />
-
-      <lib-file src="src/android/libs/classes-2.1.17.jar" />
 
    </platform>
 </plugin>
