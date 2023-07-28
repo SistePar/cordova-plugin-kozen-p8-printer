@@ -104,23 +104,24 @@ public class KozenP8Printer extends CordovaPlugin {
     }
 
 
-    open(Context context) {
+    void open(Context context) {
         printerManager = new POIPrinterManager(context);
         printerManager.open();
     }
 
-    getStatus() {
+
+    void getStatus() {
         return printerManager.getPrinterState();
     }
 
 
-    addPrintLine(String text, int align) {
+    void addPrintLine(String text, int align) {
         PrintLine pl = new TextPrintLine(text, align);
         printerManager.addPrintLine(pl);
     }
 
 
-    beginPrint() {
+    void beginPrint() {
         cordova.getThreadPool().execute(new Runnable() {
             public void run() {
 
