@@ -28,42 +28,56 @@ import java.util.List;
 public class KozenP8Printer extends CordovaPlugin {
 
     private static final String TAG = "KozenP8Printer";
-    private Context context;
+    POIPrinterManager printerManager;
+    
 
     public KozenP8Printer() {
     }
 
 
-    /*@Override
-    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-        super(cordova, webView);
-        this.context = cordova.getActivity().getBaseContext(); //webView.getContext()
-    }*/
-
-
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
         final CordovaInterface cordova = this.cordova;
-        this.context = cordova.getActivity().getBaseContext();
+        final Context context = cordova.getActivity().getBaseContext();
 
-        if (action.equals("status")) {
+        if (action.equals("open")) {
+            open(context);
+            return true;
+
+        } else if (action.equals("status")) {
+            callbackContext.success(getStatus());
+            return true;
+
+        } else if (action.equals("addPrintLine")) {
+            String text = args.getString(0);
+            int align = Integer.parseInt(args.getString(1));
+            addPrintLine(text, align);
+            return true;
+
+        } else if (action.equals("beginPrint")) {
+            beginPrint();
+            return true;
+
+        } else if (action.equals("printTest")) {
             cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
-                    final POIPrinterManager printerManager = new POIPrinterManager(cordova.getActivity().getBaseContext());
-
+                    printerManager = new POIPrinterManager(context);
                     printerManager.open();
 
                     PrintLine p1 = new TextPrintLine("HOLIIII", PrintLine.CENTER);
                     printerManager.addPrintLine(p1);
-                    printerManager.setLineSpace(5);
+                    printerManager.addPrintLine(new TextPrintLine(""));
+                    printerManager.addPrintLine(new TextPrintLine(""));
+                    printerManager.addPrintLine(new TextPrintLine(""));
+                    //printerManager.setLineSpace(5);
 
                     POIPrinterManager.IPrinterListener listener = new POIPrinterManager.IPrinterListener() {
                         @Override
                         public void onStart() {
-                            Log.d(TAG, "printer inicia")
+                            Log.d(TAG, "printer inicia");
                         }
                         @Override
                         public void onFinish() {
-                            printerManager.cleanCache();
+                            //printerManager.cleanCache();
                             printerManager.close();
                         }
                         @Override
@@ -73,17 +87,67 @@ public class KozenP8Printer extends CordovaPlugin {
                         }
                     };
 
+                    if(getStatus() == 4){
+                        printerManager.close();
+                        return true;
+                    }
+
                     printerManager.beginPrint(listener);
-
-                    callbackContext.success("ok");
-
-                    return true;
                 }
             });
 
+            return true;
         }
 
         return false;
 
+    }
+
+
+    open(Context context) {
+        printerManager = new POIPrinterManager(context);
+        printerManager.open();
+    }
+
+    getStatus() {
+        return printerManager.getPrinterState();
+    }
+
+
+    addPrintLine(String text, int align) {
+        PrintLine pl = new TextPrintLine(text, align);
+        printerManager.addPrintLine(pl);
+    }
+
+
+    beginPrint() {
+        cordova.getThreadPool().execute(new Runnable() {
+            public void run() {
+
+                POIPrinterManager.IPrinterListener listener = new POIPrinterManager.IPrinterListener() {
+                    @Override
+                    public void onStart() {
+                        Log.d(TAG, "printer inicia");
+                    }
+                    @Override
+                    public void onFinish() {
+                        //printerManager.cleanCache();
+                        printerManager.close();
+                    }
+                    @Override
+                    public void onError(int cod, String msj) {
+                        Log.e(TAG, "cod: " + cod + "msj: " + msj);
+                        printerManager.close();
+                    }
+                };
+
+                if (getStatus() == 4) {
+                    printerManager.close();
+                    return true;
+                }
+
+                printerManager.beginPrint(listener);
+            }
+        });
     }
 }

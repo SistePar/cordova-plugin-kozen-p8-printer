@@ -1,9 +1,18 @@
 var exec = require('cordova/exec');
 
 var vFunctions = {
+    open: function (fnSuccess, fnError) {
+        exec(fnSuccess, fnError, "KozenP8Printer", "open", []);
+    },
     status: function (fnSuccess, fnError) {
         exec(fnSuccess, fnError, "KozenP8Printer", "status", []);
-    }
+    },
+    addPrintLine: function (fnSuccess, fnError, text, align) {
+        exec(fnSuccess, fnError, "KozenP8Printer", "addPrintLine", [text, align]);
+    },
+    beginPrint: function (fnSuccess, fnError) {
+        exec(fnSuccess, fnError, "KozenP8Printer", "beginPrint", []);
+    },
 };
 
 module.exports = vFunctions;
