@@ -130,13 +130,13 @@ public class KozenP8Printer extends CordovaPlugin {
 
 
     void open(Context context) {
-        cordova.getThreadPool().execute(new Runnable() {
-            public void run() {
+        //cordova.getThreadPool().execute(new Runnable() {
+        //    public void run() {
                 printerManager = new POIPrinterManager(context);
                 printerManager.open();
                 printerManager.setPrintGray(1000);
-            }
-        });
+        //    }
+        //});
     }
 
 
@@ -185,7 +185,7 @@ public class KozenP8Printer extends CordovaPlugin {
                     public void onFinish() {
                         //beep(1);
                         //printerManager.cleanCache();
-                        //printerManager.close();
+                        printerManager.close();
                     }
                     @Override
                     public void onError(int cod, String msj) {
