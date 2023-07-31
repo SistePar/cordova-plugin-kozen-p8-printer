@@ -30,9 +30,6 @@ module.exports = vFunctions;
 /*printImageUrl: function (fnSuccess, fnError, str, align) {
         exec(fnSuccess, fnError, "KozenP8_Printer", "printImageUrl", [str, align]);
     },
-    printBase64: function (fnSuccess, fnError, str, align) {
-        exec(fnSuccess, fnError, "KozenP8_Printer", "printBase64", [str, align]);
-    },
     printPOSCommand: function (fnSuccess, fnError, str) {
         exec(fnSuccess, fnError, "KozenP8_Printer", "printPOSCommand", [str]);
     },

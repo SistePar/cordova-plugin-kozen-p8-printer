@@ -10,24 +10,24 @@ import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
+//import org.json.JSONObject;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.util.Log;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
+//import android.media.Ringtone;
+//import android.media.RingtoneManager;
+//import android.net.Uri;
 
 import com.pos.sdk.printer.POIPrinterManager;
 import com.pos.sdk.printer.models.BitmapPrintLine;
 import com.pos.sdk.printer.models.PrintLine;
 import com.pos.sdk.printer.models.TextPrintLine;
 
-import java.util.ArrayList;
-import java.util.List;
+//import java.util.ArrayList;
+//import java.util.List;
 
 public class KozenP8Printer extends CordovaPlugin {
 
@@ -88,7 +88,7 @@ public class KozenP8Printer extends CordovaPlugin {
                     printerManager = new POIPrinterManager(context);
                     printerManager.open();
 
-                    PrintLine p1 = new TextPrintLine("HOLIIII", PrintLine.CENTER);
+                    PrintLine p1 = new TextPrintLine("HOLA SISTEPAR", PrintLine.CENTER);
                     printerManager.addPrintLine(p1);
                     printerManager.addPrintLine(new TextPrintLine(""));
                     printerManager.addPrintLine(new TextPrintLine(""));
