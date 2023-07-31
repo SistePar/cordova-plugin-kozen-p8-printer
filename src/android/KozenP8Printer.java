@@ -47,6 +47,10 @@ public class KozenP8Printer extends CordovaPlugin {
             open(context);
             return true;
 
+        } else if (action.equals("close")) {
+            close();
+            return true;
+
         } else if (action.equals("status")) {
             callbackContext.success(getStatus());
             return true;
@@ -126,9 +130,20 @@ public class KozenP8Printer extends CordovaPlugin {
 
 
     void open(Context context) {
-        printerManager = new POIPrinterManager(context);
-        printerManager.open();
-        printerManager.setPrintGray(1000);
+        cordova.getThreadPool().execute(new Runnable() {
+            public void run() {
+                printerManager = new POIPrinterManager(context);
+                printerManager.open();
+                printerManager.setPrintGray(1000);
+            }
+        });
+    }
+
+
+    void close() {
+        if (printerManager != null) {
+            printerManager.close();
+        }
     }
 
 
@@ -165,14 +180,12 @@ public class KozenP8Printer extends CordovaPlugin {
 
                 POIPrinterManager.IPrinterListener listener = new POIPrinterManager.IPrinterListener() {
                     @Override
-                    public void onStart() {
-                        Log.d(TAG, "printer inicia");
-                    }
+                    public void onStart() {}
                     @Override
                     public void onFinish() {
-                        beep(1);
-                        printerManager.cleanCache();
-                        printerManager.close();
+                        //beep(1);
+                        //printerManager.cleanCache();
+                        //printerManager.close();
                     }
                     @Override
                     public void onError(int cod, String msj) {
@@ -193,7 +206,7 @@ public class KozenP8Printer extends CordovaPlugin {
 
 
 
-    void beep(final long count) {
+    /*void beep(final long count) {
         cordova.getThreadPool().execute(new Runnable() {
             public void run() {
                 Uri ringtone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -203,7 +216,7 @@ public class KozenP8Printer extends CordovaPlugin {
                 if (notification != null) {
                     for (long i = 0; i < count; ++i) {
                         notification.play();
-                        long timeout = 5000;
+                        long timeout = 2000;
                         while (notification.isPlaying() && (timeout > 0)) {
                             timeout = timeout - 100;
                             try {
@@ -216,7 +229,7 @@ public class KozenP8Printer extends CordovaPlugin {
                 }
             }
         });
-    }
+    }*/
 
     /*private static List<TextPrintLine> printList(String leftStr, String centerStr, String rightStr, int size, boolean bold){
         TextPrintLine textPrintLine1 = new TextPrintLine(leftStr, PrintLine.LEFT, size, bold);

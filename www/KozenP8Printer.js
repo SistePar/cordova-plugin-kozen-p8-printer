@@ -4,6 +4,9 @@ var vFunctions = {
     open: function (fnSuccess, fnError) {
         exec(fnSuccess, fnError, "KozenP8Printer", "open", []);
     },
+    close: function (fnSuccess, fnError) {
+        exec(fnSuccess, fnError, "KozenP8Printer", "close", []);
+    },
     status: function (fnSuccess, fnError) {
         exec(fnSuccess, fnError, "KozenP8Printer", "status", []);
     },
