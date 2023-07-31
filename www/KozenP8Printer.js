@@ -10,6 +10,12 @@ var vFunctions = {
     addPrintLine: function (fnSuccess, fnError, text, align) {
         exec(fnSuccess, fnError, "KozenP8Printer", "addPrintLine", [text, align]);
     },
+    addPrintLineSizeBold: function (fnSuccess, fnError, text, align, size, bold) {
+        exec(fnSuccess, fnError, "KozenP8Printer", "addPrintLineSizeBold", [text, align, size, bold]);
+    },
+    addPrintBase64: function (fnSuccess, fnError, encodedImage, align) {
+        exec(fnSuccess, fnError, "KozenP8Printer", "addPrintBase64", [encodedImage, align]);
+    },
     beginPrint: function (fnSuccess, fnError) {
         exec(fnSuccess, fnError, "KozenP8Printer", "beginPrint", []);
     },
@@ -18,31 +24,7 @@ var vFunctions = {
 module.exports = vFunctions;
 
 
-/*list: function (fnSuccess, fnError) {
-        exec(fnSuccess, fnError, "KozenP8_Printer", "list", []);
-    },
-    connect: function (fnSuccess, fnError, name) {
-        exec(fnSuccess, fnError, "KozenP8_Printer", "connect", [name]);
-    },
-    connected: function (fnSuccess, fnError) {
-        exec(fnSuccess, fnError, "KozenP8_Printer", "connected", []);
-    },
-    disconnect: function (fnSuccess, fnError) {
-        exec(fnSuccess, fnError, "KozenP8_Printer", "disconnect", []);
-    },
-    setEncoding: function (fnSuccess, fnError, str) {
-        exec(fnSuccess, fnError, "KozenP8_Printer", "setEncoding", [str]);
-    },
-    printText: function (fnSuccess, fnError, str) {
-        exec(fnSuccess, fnError, "KozenP8_Printer", "printText", [str]);
-    },
-    printTextSizeAlign: function (fnSuccess, fnError, str, size, align) {
-        exec(fnSuccess, fnError, "KozenP8_Printer", "printTextSizeAlign", [str, size, align]);
-    },
-    printTitle: function (fnSuccess, fnError, str, size, align) {
-        exec(fnSuccess, fnError, "KozenP8_Printer", "printTitle", [str, size, align]);
-    },
-    printImageUrl: function (fnSuccess, fnError, str, align) {
+/*printImageUrl: function (fnSuccess, fnError, str, align) {
         exec(fnSuccess, fnError, "KozenP8_Printer", "printImageUrl", [str, align]);
     },
     printBase64: function (fnSuccess, fnError, str, align) {

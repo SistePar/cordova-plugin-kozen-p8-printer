@@ -50,7 +50,24 @@ public class KozenP8Printer extends CordovaPlugin {
         } else if (action.equals("addPrintLine")) {
             String text = args.getString(0);
             int align = Integer.parseInt(args.getString(1));
+
             addPrintLine(text, align);
+            return true;
+
+        } else if (action.equals("addPrintLineSizeBold")) {
+            String text = args.getString(0);
+            int align = Integer.parseInt(args.getString(1));
+            int size = Integer.parseInt(args.getString(2));
+            boolean bold = Boolean.parseBoolean(args.getString(3));
+
+            addPrintLineSizeBold(text, align);
+            return true;
+        
+        } else if (action.equals("addPrintBase64")) {
+            String encodedImage = args.getString(0);
+            int align = Integer.parseInt(args.getString(1));
+
+            addPrintBase64(encodedImage, align);
             return true;
 
         } else if (action.equals("beginPrint")) {
@@ -77,7 +94,7 @@ public class KozenP8Printer extends CordovaPlugin {
                         }
                         @Override
                         public void onFinish() {
-                            //printerManager.cleanCache();
+                            printerManager.cleanCache();
                             printerManager.close();
                         }
                         @Override
@@ -89,7 +106,7 @@ public class KozenP8Printer extends CordovaPlugin {
 
                     if(getStatus() == 4){
                         printerManager.close();
-                        return true;
+                        return;
                     }
 
                     printerManager.beginPrint(listener);
@@ -107,10 +124,11 @@ public class KozenP8Printer extends CordovaPlugin {
     void open(Context context) {
         printerManager = new POIPrinterManager(context);
         printerManager.open();
+        printerManager.setPrintGray(1000);
     }
 
 
-    void getStatus() {
+    int getStatus() {
         return printerManager.getPrinterState();
     }
 
@@ -118,6 +136,21 @@ public class KozenP8Printer extends CordovaPlugin {
     void addPrintLine(String text, int align) {
         PrintLine pl = new TextPrintLine(text, align);
         printerManager.addPrintLine(pl);
+    }
+
+
+    void addPrintLineSize(String text, int align, int size, boolean bold) {
+        PrintLine pl = new TextPrintLine(text, align, size, bold);
+        printerManager.addPrintLine(pl);
+    }
+
+
+    void addPrintBase64(String encodedImage, int align) {
+        //align PrintLine.CENTER
+        byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+        printerManager.addPrintLine(new BitmapPrintLine(decodedByte, align));
     }
 
 
@@ -132,7 +165,7 @@ public class KozenP8Printer extends CordovaPlugin {
                     }
                     @Override
                     public void onFinish() {
-                        //printerManager.cleanCache();
+                        printerManager.cleanCache();
                         printerManager.close();
                     }
                     @Override
@@ -144,11 +177,24 @@ public class KozenP8Printer extends CordovaPlugin {
 
                 if (getStatus() == 4) {
                     printerManager.close();
-                    return true;
+                    return;
                 }
 
                 printerManager.beginPrint(listener);
             }
         });
     }
+
+
+
+    /*private static List<TextPrintLine> printList(String leftStr, String centerStr, String rightStr, int size, boolean bold){
+        TextPrintLine textPrintLine1 = new TextPrintLine(leftStr, PrintLine.LEFT, size, bold);
+        TextPrintLine textPrintLine2 = new TextPrintLine(centerStr,PrintLine.CENTER, size, bold);
+        TextPrintLine textPrintLine3 = new TextPrintLine(rightStr, PrintLine.RIGHT, size, bold);
+        List<TextPrintLine> list = new ArrayList<>();
+        list.add(textPrintLine1);
+        list.add(textPrintLine2);
+        list.add(textPrintLine3);
+        return list;
+    }*/
 }

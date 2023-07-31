@@ -1,7 +1,7 @@
 {
-  "name": "KozenP8_Printer",
+  "name": "KozenP8Printer",
   "version": "1.0.0",
-  "description": "A cordova plugin for bluetooth printer for android platform.",
+  "description": "Plugin de cordova para usar el SDK e imprimir con la impresora integrada.",
   "cordova": {
     "id": "cordova-plugin-kozen-p8-printer",
     "platforms": [
@@ -10,17 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CesarBalzer/Cordova-Plugin-BTPrinter.git"
+    "url": "git+https://github.com/SistePar/cordova-plugin-kozen-p8-printer.git"
   },
   "keywords": [
     "cordova",
     "printer",
     "pos",
-    "text",
-    "barcode",
-    "image",
-    "base64",
-    "qrcode",
+    "kozen",
+    "p8",
     "ecosystem:cordova",
     "cordova-android"
   ],
@@ -33,7 +30,7 @@
   "author": "sistepar.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/CesarBalzer/Cordova-Plugin-BTPrinter/issues"
+    "url": "https://github.com/SistePar/cordova-plugin-kozen-p8-printer/issues"
   },
-  "homepage": "https://github.com/CesarBalzer/Cordova-Plugin-BTPrinter#readme"
+  "homepage": "https://github.com/SistePar/cordova-plugin-kozen-p8-printer#readme"
 }
