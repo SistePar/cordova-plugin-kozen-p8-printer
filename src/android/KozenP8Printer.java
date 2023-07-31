@@ -15,7 +15,11 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 
 import com.pos.sdk.printer.POIPrinterManager;
 import com.pos.sdk.printer.models.BitmapPrintLine;
@@ -60,7 +64,7 @@ public class KozenP8Printer extends CordovaPlugin {
             int size = Integer.parseInt(args.getString(2));
             boolean bold = Boolean.parseBoolean(args.getString(3));
 
-            addPrintLineSizeBold(text, align);
+            addPrintLineSizeBold(text, align, size, bold);
             return true;
         
         } else if (action.equals("addPrintBase64")) {
@@ -139,18 +143,19 @@ public class KozenP8Printer extends CordovaPlugin {
     }
 
 
-    void addPrintLineSize(String text, int align, int size, boolean bold) {
+    void addPrintLineSizeBold(String text, int align, int size, boolean bold) {
         PrintLine pl = new TextPrintLine(text, align, size, bold);
         printerManager.addPrintLine(pl);
     }
 
 
-    void addPrintBase64(String encodedImage, int align) {
+    void addPrintBase64(final String encodedString, int align) {
         //align PrintLine.CENTER
-        byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        final String pureBase64Encoded = encodedString.substring(encodedString.indexOf(",") + 1);
+        final byte[] decodedBytes = Base64.decode(pureBase64Encoded, Base64.DEFAULT);
+        Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
 
-        printerManager.addPrintLine(new BitmapPrintLine(decodedByte, align));
+        printerManager.addPrintLine(new BitmapPrintLine(decodedBitmap, align));
     }
 
 
@@ -165,6 +170,7 @@ public class KozenP8Printer extends CordovaPlugin {
                     }
                     @Override
                     public void onFinish() {
+                        beep(1);
                         printerManager.cleanCache();
                         printerManager.close();
                     }
@@ -186,6 +192,31 @@ public class KozenP8Printer extends CordovaPlugin {
     }
 
 
+
+    void beep(final long count) {
+        cordova.getThreadPool().execute(new Runnable() {
+            public void run() {
+                Uri ringtone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                Ringtone notification = RingtoneManager.getRingtone(cordova.getActivity().getBaseContext(), ringtone);
+
+                // If phone is not set to silent mode
+                if (notification != null) {
+                    for (long i = 0; i < count; ++i) {
+                        notification.play();
+                        long timeout = BEEP_TIMEOUT;
+                        while (notification.isPlaying() && (timeout > 0)) {
+                            timeout = timeout - BEEP_WAIT_TINE;
+                            try {
+                                Thread.sleep(BEEP_WAIT_TINE);
+                            } catch (InterruptedException e) {
+                                Thread.currentThread().interrupt();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
 
     /*private static List<TextPrintLine> printList(String leftStr, String centerStr, String rightStr, int size, boolean bold){
         TextPrintLine textPrintLine1 = new TextPrintLine(leftStr, PrintLine.LEFT, size, bold);
