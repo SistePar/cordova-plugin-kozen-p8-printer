@@ -203,11 +203,11 @@ public class KozenP8Printer extends CordovaPlugin {
                 if (notification != null) {
                     for (long i = 0; i < count; ++i) {
                         notification.play();
-                        long timeout = BEEP_TIMEOUT;
+                        long timeout = 5000;
                         while (notification.isPlaying() && (timeout > 0)) {
-                            timeout = timeout - BEEP_WAIT_TINE;
+                            timeout = timeout - 100;
                             try {
-                                Thread.sleep(BEEP_WAIT_TINE);
+                                Thread.sleep(100);
                             } catch (InterruptedException e) {
                                 Thread.currentThread().interrupt();
                             }
